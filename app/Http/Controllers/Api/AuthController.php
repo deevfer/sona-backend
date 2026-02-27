@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Http;
+use Laravel\Sanctum\PersonalAccessToken;
+
 
 class AuthController extends Controller
 {
@@ -69,39 +71,63 @@ class AuthController extends Controller
 
     public function registerWithPayment(Request $request)
     {
-        // Validación básica
         $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
-            'paypalDetails' => 'required|array'
+            'orderID' => 'required'
         ]);
-    
-        $paypalDetails = $request->paypalDetails;
-    
-        // Validar que la orden esté completada
-        if (!isset($paypalDetails['status']) || $paypalDetails['status'] !== 'COMPLETED') {
+
+        // Obtener access token PayPal
+        $accessToken = $this->generatePayPalAccessToken();
+
+        // Verificar orden directamente con PayPal
+        $response = Http::withToken($accessToken)
+            ->get(env('PAYPAL_BASE_URL') . "/v2/checkout/orders/{$request->orderID}");
+
+        $order = $response->json();
+
+        if (!$order || $order['status'] !== 'COMPLETED') {
             return response()->json(['message' => 'Pago no válido'], 400);
         }
-    
-        // Validar monto
-        $amount = $paypalDetails['purchase_units'][0]['amount']['value'] ?? null;
+
+        $amount = $order['purchase_units'][0]['amount']['value'] ?? null;
+
         if ($amount != "1.99") {
             return response()->json(['message' => 'Monto incorrecto'], 400);
         }
-    
+
         // Crear usuario
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => 'user',
-            'paypal_order_id' => $paypalDetails['id'] ?? null,
-            'paypal_payer_email' => $paypalDetails['payer']['email_address'] ?? null,
-            'paypal_status' => $paypalDetails['status'] ?? null,
         ]);
-    
+
+        // Crear pago
+        $payment = \App\Models\Payment::create([
+            'user_id' => $user->id,
+            'provider' => 'paypal',
+            'provider_transaction_id' => $order['id'],
+            'amount' => $amount,
+            'currency' => $order['purchase_units'][0]['amount']['currency_code'],
+            'status' => $order['status'],
+            'raw_response' => json_encode($order)
+        ]);
+
+        // Crear acceso premium vinculado al pago
+        \App\Models\PremiumAccess::create([
+            'user_id' => $user->id,
+            'payment_id' => $payment->id,
+            'type' => 'lifetime',
+            'starts_at' => now(),
+            'ends_at' => null
+        ]);
+
+        // Token
         $token = $user->createToken('auth_token')->plainTextToken;
-    
+
         return response()->json([
             'user' => $user,
             'token' => $token
