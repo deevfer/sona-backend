@@ -9,7 +9,7 @@ use App\Models\ExternalAccount;
 
 class SpotifyController extends Controller
 {
-    // 🔹 1. REDIRECT A SPOTIFY
+    // 1. REDIRECT A SPOTIFY
     public function redirect(Request $request)
     {
         $token = $request->query('token');
@@ -31,7 +31,7 @@ class SpotifyController extends Controller
         ]);
     }
 
-    // 🔹 2. CALLBACK DE SPOTIFY
+    // 2. CALLBACK DE SPOTIFY
     public function callback(Request $request)
     {
         $code = $request->query('code');
@@ -41,7 +41,7 @@ class SpotifyController extends Controller
             return response()->json(['error' => 'Parámetros faltantes'], 400);
         }
 
-        // 🔥 Buscar usuario por token Sanctum
+        // Buscar usuario por token Sanctum
         $personalToken = PersonalAccessToken::findToken($token);
 
         if (!$personalToken) {
@@ -50,7 +50,7 @@ class SpotifyController extends Controller
 
         $user = $personalToken->tokenable;
 
-        // 🔹 Obtener tokens de Spotify
+        // Obtener tokens de Spotify
         $response = Http::asForm()->post('https://accounts.spotify.com/api/token', [
             'grant_type' => 'authorization_code',
             'code' => $code,
@@ -61,7 +61,7 @@ class SpotifyController extends Controller
 
         $data = $response->json();
 
-        // 🔹 Obtener info del usuario Spotify
+        // Obtener info del usuario Spotify
         $spotifyUser = Http::withToken($data['access_token'])
             ->get('https://api.spotify.com/v1/me')
             ->json();
@@ -70,7 +70,7 @@ class SpotifyController extends Controller
             ? explode(' ', $data['scope'])
             : [];
 
-        // 🔹 Guardar en DB
+        // Guardar en DB
         ExternalAccount::updateOrCreate(
             [
                 'user_id' => $user->id,
