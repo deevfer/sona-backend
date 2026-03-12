@@ -61,13 +61,18 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        // Eliminar el token actual de Sanctum
         $request->user()->currentAccessToken()->delete();
-
+    
+        // Eliminar las sesiones de la tabla sessions
+        \DB::table('sessions')
+            ->where('user_id', $request->user()->id)
+            ->delete();
+    
         return response()->json([
             'message' => 'Sesión cerrada correctamente'
         ]);
     }
-
 
     public function registerWithPayment(Request $request)
     {
