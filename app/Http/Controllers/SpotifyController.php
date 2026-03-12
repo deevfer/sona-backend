@@ -150,7 +150,7 @@ class SpotifyController extends Controller
             ]
         );
 
-        return redirect('http://localhost:5180/sona');
+        return redirect('http://localhost:5181/sona');
     }
 
     // =========================
@@ -166,51 +166,47 @@ class SpotifyController extends Controller
     public function nowPlaying(SpotifyService $spotifyService)
     {
         $userId = auth()->id();
-    
+
         $cacheKey = "spotify:nowplaying:{$userId}";
         $lastGoodKey = "spotify:last_good_nowplaying:{$userId}";
-    
-        // 1) Respuesta rápida cacheada (2s)
+
         $cached = Cache::get($cacheKey);
         if ($cached) {
             return response()->json($cached, 200);
         }
-    
+
         $accessToken = $spotifyService->getValidAccessToken($userId);
-    
+
         $res = Http::withToken($accessToken)
             ->connectTimeout(5)
             ->timeout(20)
             ->get('https://api.spotify.com/v1/me/player/currently-playing');
-    
-        // 2) 204: nada sonando
+
         if ($res->status() === 204) {
             $payload = [
                 'is_playing' => false,
                 'track' => null,
                 'progress_ms' => null,
             ];
-    
+
             Cache::put($cacheKey, $payload, 2);
-            Cache::put($lastGoodKey, $payload, 600); // 10 min
+            Cache::put($lastGoodKey, $payload, 600);
             return response()->json($payload, 200);
         }
-    
-        // 3) 429: rate limit -> devolver last_good si existe
+
         if ($res->status() === 429) {
             $retryAfter = (int) ($res->header('Retry-After') ?? 2);
             $last = Cache::get($lastGoodKey);
-    
+
             return response()
                 ->json([
                     'error' => 'rate_limited',
                     'retry_after' => $retryAfter,
-                    'last' => $last, // ✅ ya no debería ser null si hubo algún éxito antes
+                    'last' => $last,
                 ], 429)
                 ->header('Retry-After', $retryAfter);
         }
-    
-        // 4) errores Spotify
+
         if (!$res->ok()) {
             return response()->json([
                 'error' => 'spotify_error',
@@ -218,10 +214,9 @@ class SpotifyController extends Controller
                 'body' => $res->json(),
             ], $res->status());
         }
-    
-        // 5) éxito
+
         $data = $res->json();
-    
+
         $payload = [
             'is_playing' => $data['is_playing'] ?? false,
             'progress_ms' => $data['progress_ms'] ?? null,
@@ -234,10 +229,10 @@ class SpotifyController extends Controller
                 'duration_ms' => $data['item']['duration_ms'] ?? null,
             ],
         ];
-    
+
         Cache::put($cacheKey, $payload, 2);
-        Cache::put($lastGoodKey, $payload, 600); // 10 min
-    
+        Cache::put($lastGoodKey, $payload, 600);
+
         return response()->json($payload, 200);
     }
 
@@ -340,9 +335,6 @@ class SpotifyController extends Controller
         return response()->json(['ok' => true], 200);
     }
 
-    // =========================
-    // PLAY con fallback device
-    // =========================
     public function play(Request $request, SpotifyService $spotifyService)
     {
         $accessToken = $spotifyService->getValidAccessToken(auth()->id());
@@ -649,25 +641,20 @@ class SpotifyController extends Controller
         $times = (int) $request->input('times', 1);
         $times = max(1, min($times, 50));
 
-        // Obtener volumen actual
         $playerRes = Http::withToken($token)
             ->get('https://api.spotify.com/v1/me/player');
         $currentVolume = $playerRes->json()['device']['volume_percent'] ?? 50;
 
-        // Silenciar
         Http::withToken($token)
             ->put('https://api.spotify.com/v1/me/player/volume?volume_percent=0');
 
-        // Skips
         for ($i = 0; $i < $times; $i++) {
             Http::withToken($token)
                 ->post('https://api.spotify.com/v1/me/player/next');
         }
 
-        // Esperar a que estabilice
         usleep(300000);
 
-        // Restaurar volumen
         Http::withToken($token)
             ->put('https://api.spotify.com/v1/me/player/volume?volume_percent=' . $currentVolume);
 
@@ -676,13 +663,66 @@ class SpotifyController extends Controller
 
     public function status(Request $request)
     {
-        $account = ExternalAccount::where('user_id', $request->user()->id)
-            ->whereNotNull('access_token')
+        $user = $request->user();
+
+        $account = ExternalAccount::where('user_id', $user->id)
+            ->where('provider', 'spotify')
             ->first();
 
-        return response()->json([
-            'connected' => !!$account,
-            'provider' => $account->provider ?? null,
-        ]);
+        if (!$account) {
+            return response()->json([
+                'connected' => false,
+                'provider' => 'spotify',
+                'reason' => 'no_account',
+            ]);
+        }
+
+        if (!$account->access_token) {
+            return response()->json([
+                'connected' => false,
+                'provider' => 'spotify',
+                'reason' => 'no_access_token',
+            ]);
+        }
+
+        try {
+            $token = app(SpotifyService::class)->getValidAccessToken($user->id);
+
+            if (!$token) {
+                return response()->json([
+                    'connected' => false,
+                    'provider' => 'spotify',
+                    'reason' => 'no_valid_token',
+                ]);
+            }
+
+            $me = Http::withToken($token)
+                ->acceptJson()
+                ->get('https://api.spotify.com/v1/me');
+
+            if ($me->successful()) {
+                $spotifyUser = $me->json();
+
+                return response()->json([
+                    'connected' => true,
+                    'provider' => 'spotify',
+                    'provider_user_id' => $spotifyUser['id'] ?? $account->provider_user_id,
+                ]);
+            }
+
+            return response()->json([
+                'connected' => false,
+                'provider' => 'spotify',
+                'reason' => 'invalid_remote_token',
+                'spotify_status' => $me->status(),
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'connected' => false,
+                'provider' => 'spotify',
+                'reason' => 'status_exception',
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 }
