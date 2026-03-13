@@ -47,15 +47,15 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Credenciales incorrectas.'],
-            ]);
+            return response()->json([
+                'error' => 'INVALID_CREDENTIALS'
+            ], 422);
         }
 
-        // Bloquear si ya existe una sesión/token activo en otro dispositivo
+        // Bloquear si ya existe una sesión/token activo
         if ($user->tokens()->exists()) {
             return response()->json([
-                'message' => 'Esta cuenta ya tiene una sesión activa en otro dispositivo. Cierra sesión ahí antes de continuar.'
+                'error' => 'SESSION_ACTIVE'
             ], 403);
         }
 
