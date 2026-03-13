@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://sona.fernandovasquez.tech/",
+        target: "https://sona.fernandovasquez.tech",
         changeOrigin: true,
         secure: false,
       },
