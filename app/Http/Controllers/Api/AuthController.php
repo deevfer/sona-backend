@@ -43,20 +43,29 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         $user = User::where('email', $request->email)->first();
-
+    
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['Credenciales incorrectas.'],
             ]);
         }
-
+    
+        // cerrar sesión previa en cualquier dispositivo
+        $user->tokens()->delete();
+    
+        // borrar conexiones externas para forzar nueva autorización
+        \App\Models\ExternalAccount::where('user_id', $user->id)->delete();
+    
+        // opcional: limpiar sesiones
+        \DB::table('sessions')->where('user_id', $user->id)->delete();
+    
         $token = $user->createToken('sona-token')->plainTextToken;
-
+    
         return response()->json([
             'user' => $user,
-            'token' => $token
+            'token' => $token,
         ]);
     }
 
