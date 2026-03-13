@@ -7,7 +7,8 @@ return [
     'allowed_origins' => [
         'https://sona-studio.fernandovasquez.tech',
         'https://sona.fernandovasquez.tech',
-        'http://localhost:5181/'
+        'http://localhost:5181',
+        'http://127.0.0.1:8000',
     ],
     'allowed_headers' => ['*'],
     'exposed_headers' => ['Retry-After'],
