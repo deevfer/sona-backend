@@ -123,7 +123,7 @@ class AuthController extends Controller
 
         $amount = $order['purchase_units'][0]['amount']['value'] ?? null;
 
-        if ($amount != "1.99") {
+        if ($amount != "2.99") {
             return response()->json([
                 'message' => 'Monto incorrecto',
             ], 400);
