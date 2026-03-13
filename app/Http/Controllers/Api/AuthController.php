@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\ExternalAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Http;
 use Laravel\Sanctum\PersonalAccessToken;
-
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -61,16 +62,34 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // Eliminar el token actual de Sanctum
-        $request->user()->currentAccessToken()->delete();
-    
-        // Eliminar las sesiones de la tabla sessions
-        \DB::table('sessions')
-            ->where('user_id', $request->user()->id)
-            ->delete();
-    
+        $user = $request->user();
+
+        if (! $user) {
+            return response()->json([
+                'message' => 'Usuario no autenticado'
+            ], 401);
+        }
+
+        DB::transaction(function () use ($request, $user) {
+            // 1. Eliminar conexiones externas del usuario
+            ExternalAccount::where('user_id', $user->id)->delete();
+
+            // 2. Eliminar token actual de Sanctum
+            if ($user->currentAccessToken()) {
+                $user->currentAccessToken()->delete();
+            }
+
+            // Si se requiere cerrar sesión en todos los dispositivos:
+            // $user->tokens()->delete();
+
+            // 3. Eliminar sesiones guardadas
+            DB::table('sessions')
+                ->where('user_id', $user->id)
+                ->delete();
+        });
+
         return response()->json([
-            'message' => 'Sesión cerrada correctamente'
+            'message' => 'Sesión cerrada correctamente y proveedores desvinculados'
         ]);
     }
 
@@ -83,10 +102,8 @@ class AuthController extends Controller
             'orderID' => 'required'
         ]);
 
-        // Obtener access token PayPal
         $accessToken = $this->generatePayPalAccessToken();
 
-        // Verificar orden directamente con PayPal
         $response = Http::withToken($accessToken)
             ->get(env('PAYPAL_BASE_URL') . "/v2/checkout/orders/{$request->orderID}");
 
@@ -102,7 +119,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Monto incorrecto'], 400);
         }
 
-        // Crear usuario
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -110,7 +126,6 @@ class AuthController extends Controller
             'role' => 'user',
         ]);
 
-        // Crear pago
         $payment = \App\Models\Payment::create([
             'user_id' => $user->id,
             'provider' => 'paypal',
@@ -121,7 +136,6 @@ class AuthController extends Controller
             'raw_response' => json_encode($order)
         ]);
 
-        // Crear acceso premium vinculado al pago
         \App\Models\PremiumAccess::create([
             'user_id' => $user->id,
             'payment_id' => $payment->id,
@@ -130,7 +144,6 @@ class AuthController extends Controller
             'ends_at' => null
         ]);
 
-        // Token
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -138,7 +151,6 @@ class AuthController extends Controller
             'token' => $token
         ]);
     }
-
 
     private function generatePayPalAccessToken()
     {
@@ -151,5 +163,4 @@ class AuthController extends Controller
 
         return $response->json()['access_token'];
     }
-
 }
