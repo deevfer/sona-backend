@@ -10,7 +10,7 @@ Route::get('/', function () {
             'Authorization' => 'Bearer ' . $service->generateDeveloperToken(),
         ])->get('https://api.music.apple.com/v1/catalog/us/charts', [
             'types' => 'albums',
-            'limit' => 40,
+            'limit' => 20,
         ]);
 
         $albums = collect($response->json('results.albums.0.data', []))
