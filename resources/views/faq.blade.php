@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }} | HOME</title>
-
+        <title>{{ config('app.name', 'Laravel') }} | FAQ</title>
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/sonaFavicon.svg') }}">
+        <link rel="alternate icon" href="{{ asset('assets/sonaFavicon.svg') }}">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=poppins:300,400,500,600,700" rel="stylesheet" />
         <script defer src="https://unpkg.com/i18next@23.11.5/i18next.min.js"></script>
