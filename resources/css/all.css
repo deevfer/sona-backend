@@ -1,0 +1,890 @@
+*{
+    text-decoration: none !important;
+    outline: 0 !important;
+}
+:root{
+    --bs-border-radius-lg: 40px;
+}
+.row {
+    margin: 0 !important;
+    padding: 0;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+    max-width: 100%;
+    position: relative;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+    background: #000;
+
+}
+.desktop{
+    display: block;
+}
+.responsive{
+    display: none;
+}
+.container{
+    max-width: 1280px;
+    width: 100%;
+    position: relative;
+    margin: auto;
+}
+.tabs {
+    position: relative;
+    display: flex;
+    background: transparent;
+    padding: 5px;
+    border-radius: 50px;
+    width: -moz-fit-content;
+    border: 1px solid #ffffff40;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 340px;
+}
+
+/* Botones ocupan mismo espacio */
+.tabBtn {
+    flex: 1;
+    text-align: center;
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50px;
+    font-family: inherit;
+    color: #aaa;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.tabBtn.active {
+    color: #000;
+}
+
+/* Indicator */
+.tabIndicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(50% - 0px);
+    background: #fff;
+    border-radius: 50px;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+/* Botones */
+.tabBtn {
+    position: relative;
+    z-index: 1;
+    padding: 10px 18px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 50px;
+    font-family: inherit;
+    color: #fff;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+/* Activo solo cambia texto */
+.tabBtn.active {
+    color: #000;
+}
+.tabContent {
+    display: none;
+    margin-top: 30px;
+}
+
+.tabContent.active {
+    display: block;
+}
+.headerContent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 0;
+    height: auto;
+}
+.headerContent .item img {
+    width: 60px;
+}
+button.langBtn {
+    color: #ffffff8f;
+    font-size: 14px;
+    transition: all 0.3s;
+    font-weight: 700;
+}
+button.langBtn.active{
+    color: #fff;
+    font-weight: 700;
+    transition:all 0.3s;
+}
+.lang {
+    display: flex;
+    width: 100px;
+    justify-content: space-around;
+    color: #fff;
+}
+.appContent {
+    width: 70%;
+    margin: auto;
+}
+.appContent h1 {
+    color: #fff;
+    font-size: 5rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 80px;
+}
+
+.stack3D {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 80vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0;
+    gap: 0;
+    scrollbar-width: none;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+  
+  .stack3D::-webkit-scrollbar {
+    display: none;
+  }
+  
+ .album3D {
+  flex: 0 0 auto;
+  width: 450px;
+  height: 450px;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  margin-left: -360px;
+  perspective: 860px;
+  pointer-events: none;
+}
+
+.album3D:first-child {
+  margin-left: 0;
+}
+
+.albumBox {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--rot, 65deg));
+  will-change: transform;
+}
+.albumFront,
+.albumSpine {
+    pointer-events: auto;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.albumFront {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(7px);
+  overflow: hidden;
+}
+
+.albumFront img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.albumBack {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg) translateZ(7px);
+    overflow: hidden;
+    pointer-events: auto;
+}
+.albumBack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scaleX(-1);
+}
+
+.albumSpine {
+  position: absolute;
+  width: 15px;
+  height: 100%;
+  left: -18px;
+  background: var(--spine-bg, rgb(30, 30, 30));
+  transform: rotateY(-90deg) translateZ(-10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+}
+
+.albumSpine span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 90%;
+  letter-spacing: 0.4px;
+  color: var(--spine-text, rgba(255, 255, 255, 0.4));
+  text-transform: uppercase;
+}
+.stack3D.fadeIn .album3D {
+    opacity: 0;
+    animation: vinylFadeIn 0.4s ease forwards;
+}
+  
+.stack3D.fadeIn .album3D:nth-child(1)  { animation-delay: 0.03s; }
+.stack3D.fadeIn .album3D:nth-child(2)  { animation-delay: 0.07s; }
+.stack3D.fadeIn .album3D:nth-child(3)  { animation-delay: 0.11s; }
+.stack3D.fadeIn .album3D:nth-child(4)  { animation-delay: 0.15s; }
+.stack3D.fadeIn .album3D:nth-child(5)  { animation-delay: 0.19s; }
+.stack3D.fadeIn .album3D:nth-child(6)  { animation-delay: 0.23s; }
+.stack3D.fadeIn .album3D:nth-child(7)  { animation-delay: 0.27s; }
+.stack3D.fadeIn .album3D:nth-child(8)  { animation-delay: 0.31s; }
+.stack3D.fadeIn .album3D:nth-child(9)  { animation-delay: 0.35s; }
+.stack3D.fadeIn .album3D:nth-child(10) { animation-delay: 0.39s; }
+
+@keyframes vinylFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.available {
+    position: relative;
+    bottom: 220px;
+    background: #fff;
+    z-index: 9999;
+    border-radius: 110px;
+    width: 60%;
+    padding: 10px;
+    margin: auto;
+}
+.availableBar {
+    width: 160px;
+    height: 7px;
+    background: #00000030;
+    border-radius: 50px;
+    margin: 15px auto;
+}
+.availableContent {
+    margin: 50px 0;
+}
+.availableContent h1 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+}
+.devices {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    justify-content: space-around;
+    margin: 30px auto;
+}
+.devices span{
+    font-size: 14px;
+    color: #00000052;
+}
+.downloadButtons {
+    position: relative;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.downloadButtons a {
+    display: block;
+    width: 50%;
+    margin: 20px 10px;
+}
+.downloadButtons a img{
+    width: 100%;
+}
+.registerOnWeb {
+    position: relative;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.bar {
+    width: 50%;
+    height: 1px;
+    background: #0000001f;
+    margin: 0 20px;
+}
+.registerOnWeb span {
+    font-size: 12px;
+    color: #000;
+}
+.registerOnWebButton {
+    width: 190px;
+    margin: 20px auto;
+    position: relative;
+    text-align: center;
+}
+.buttonWeb {
+    display: block;
+    border: 1px solid #000;
+    border-radius: 50px;
+}
+.buttonWeb a {
+    display: block;
+    padding: 10px 5px;
+}
+.badge {
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+    padding: 4px 10px;
+    background: #FA243F;
+    border-radius: 50px;
+}
+.badge p {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+}
+.badge span{
+    font-size: 10px;
+    font-weight: 500;
+}
+.footerContent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 60px 0;
+    height: auto;
+}
+.footerContent .itemFooter a img {
+    width: 60px;
+}
+.footerContent .itemFooter p {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 400;
+}
+.footerContent .itemFooter a {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+}
+.requirements, .terms, .faq {
+    width: 80%;
+    margin: auto;
+}
+.requirements h1 {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+}
+.requirements h3 {
+    font-weight: 600;
+    margin-top: 20px;
+    color: #fff;
+}
+
+.requirements p {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+}
+.faqItem {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 15px 0;
+}
+
+.faqQuestion {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+}
+
+.faqAnswer {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    line-height: 1.5;
+
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.faqItem.active .faqAnswer {
+    max-height: 200px;
+    opacity: 0.7;
+}
+
+@media (min-width: 320px) and (max-width: 484px){
+    .desktop{
+        display: none;
+    }
+    .responsive{
+        display: block;
+    }
+    .appContent h1 {
+        font-size: 36px;
+        line-height: 40px;
+    }
+    section.header {
+        padding: 0 20px;
+    }
+    .headerTabs {
+        display: flex;
+        justify-content: center;
+    }
+    .available {
+        border-radius: 80px;
+        width: 100%;
+        bottom: 140px;
+    }
+    .downloadButtons {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+    .footerContent {
+        padding: 0 0 40px;
+        height: auto;
+        flex-direction: column;
+    }
+    .availableBar {
+        width: 110px;
+        height: 5px;
+    }
+    .itemFooter {
+        margin: 0 0 10px;
+    }
+
+    /* Botones ocupan mismo espacio */
+    .headerTabs .tabBtn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 20px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #aaa;
+        z-index: 1;
+        transition: color 0.3s ease;
+    }
+
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+
+    /* Indicator */
+    .headerTabs .tabIndicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(50% - 0px);
+        background: #fff;
+        border-radius: 50px;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    /* Botones */
+    .headerTabs .tabBtn {
+        position: relative;
+        z-index: 1;
+        padding: 10px 18px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #fff;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    /* Activo solo cambia texto */
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+    .headerTabs .tabContent {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .headerTabs .tabContent.active {
+        display: block;
+    }
+    .requirements, .terms, .faq {
+        width: 85%;
+        margin: 45px auto;
+    }
+    
+}
+
+
+@media (min-width: 568px) and (max-width: 736px){
+
+    .desktop{
+        display: none;
+    }
+    .responsive{
+        display: block;
+    }
+    .appContent h1 {
+        font-size: 36px;
+        line-height: 40px;
+    }
+    section.header {
+        padding: 0 20px;
+    }
+    .headerTabs {
+        display: flex;
+        justify-content: center;
+    }
+    .available {
+        border-radius: 80px;
+        width: 100%;
+        bottom: 140px;
+    }
+    .downloadButtons {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+    .footerContent {
+        padding: 0 0 40px;
+        height: auto;
+        flex-direction: column;
+    }
+    .availableBar {
+        width: 110px;
+        height: 5px;
+    }
+    .itemFooter {
+        margin: 0 0 10px;
+    }
+
+    /* Botones ocupan mismo espacio */
+    .headerTabs .tabBtn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 20px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #aaa;
+        z-index: 1;
+        transition: color 0.3s ease;
+    }
+
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+
+    /* Indicator */
+    .headerTabs .tabIndicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(50% - 0px);
+        background: #fff;
+        border-radius: 50px;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    /* Botones */
+    .headerTabs .tabBtn {
+        position: relative;
+        z-index: 1;
+        padding: 10px 18px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #fff;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    /* Activo solo cambia texto */
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+    .headerTabs .tabContent {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .headerTabs .tabContent.active {
+        display: block;
+    }
+    .requirements, .terms, .faq {
+        width: 85%;
+        margin: 45px auto;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 1000px){
+
+    .desktop{
+        display: none;
+    }
+    .responsive{
+        display: block;
+    }
+    .appContent h1 {
+        font-size: 36px;
+        line-height: 40px;
+    }
+    section.header {
+        padding: 0 20px;
+    }
+    .headerTabs {
+        display: flex;
+        justify-content: center;
+    }
+    .available {
+        border-radius: 80px;
+        width: 100%;
+        bottom: 140px;
+    }
+    .downloadButtons {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+    .footerContent {
+        padding: 0 0 40px;
+        height: auto;
+        flex-direction: column;
+    }
+    .availableBar {
+        width: 110px;
+        height: 5px;
+    }
+    .itemFooter {
+        margin: 0 0 10px;
+    }
+
+    /* Botones ocupan mismo espacio */
+    .headerTabs .tabBtn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 20px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #aaa;
+        z-index: 1;
+        transition: color 0.3s ease;
+    }
+
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+
+    /* Indicator */
+    .headerTabs .tabIndicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(50% - 0px);
+        background: #fff;
+        border-radius: 50px;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    /* Botones */
+    .headerTabs .tabBtn {
+        position: relative;
+        z-index: 1;
+        padding: 10px 18px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #fff;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    /* Activo solo cambia texto */
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+    .headerTabs .tabContent {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .headerTabs .tabContent.active {
+        display: block;
+    }
+    .requirements, .terms, .faq {
+        width: 85%;
+        margin: 45px auto;
+    }
+
+    .appContent h1 {
+        font-size: 66px;
+        line-height: 70px
+    }
+    .stack3D {
+        height: 160vh;
+    }
+}
+
+
+@media (orientation:landscape) and (max-width: 1050px){
+
+    .desktop{
+        display: none;
+    }
+    .responsive{
+        display: block;
+    }
+    .appContent h1 {
+        font-size: 36px;
+        line-height: 40px;
+    }
+    section.header {
+        padding: 0 20px;
+    }
+    .headerTabs {
+        display: flex;
+        justify-content: center;
+    }
+    .available {
+        border-radius: 80px;
+        width: 100%;
+        bottom: 140px;
+    }
+    .downloadButtons {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+    }
+    .footerContent {
+        padding: 0 0 40px;
+        height: auto;
+        flex-direction: column;
+    }
+    .availableBar {
+        width: 110px;
+        height: 5px;
+    }
+    .itemFooter {
+        margin: 0 0 10px;
+    }
+
+    /* Botones ocupan mismo espacio */
+    .headerTabs .tabBtn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 20px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #aaa;
+        z-index: 1;
+        transition: color 0.3s ease;
+    }
+
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+
+    /* Indicator */
+    .headerTabs .tabIndicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(50% - 0px);
+        background: #fff;
+        border-radius: 50px;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+    /* Botones */
+    .headerTabs .tabBtn {
+        position: relative;
+        z-index: 1;
+        padding: 10px 18px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 50px;
+        font-family: inherit;
+        color: #fff;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    /* Activo solo cambia texto */
+    .headerTabs .tabBtn.active {
+        color: #000;
+    }
+    .headerTabs .tabContent {
+        display: none;
+        margin-top: 30px;
+    }
+
+    .headerTabs .tabContent.active {
+        display: block;
+    }
+    .requirements, .terms, .faq {
+        width: 85%;
+        margin: 45px auto;
+    }
+    .appContent h1 {
+        font-size: 66px;
+        line-height: 70px
+    }
+}

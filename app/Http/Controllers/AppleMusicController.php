@@ -266,7 +266,7 @@ class AppleMusicController extends Controller
     {
         try {
             $storefront = $request->get('storefront', 'us');
-            $limit = (int) $request->get('limit', 18);
+            $limit = (int) $request->get('limit', 40);
             $limit = max(6, min($limit, 30));
 
             $response = Http::withHeaders($this->getDeveloperHeaders())
@@ -419,4 +419,6 @@ class AppleMusicController extends Controller
             ], 500);
         }
     }
+
+    
 }
