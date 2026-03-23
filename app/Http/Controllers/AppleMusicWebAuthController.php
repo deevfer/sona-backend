@@ -14,7 +14,7 @@ class AppleMusicWebAuthController extends Controller
             abort(400, 'Missing token');
         }
 
-        return view('apple-music.android-connect', [
+        return view('android-connect', [
             'token' => $token,
             'apiBase' => config('app.api_url'),
         ]);
