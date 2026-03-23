@@ -50,10 +50,6 @@
 
     <script>
         const API_BASE = @json($apiBase);
-        console.log("API_BASE:", API_BASE);
-    </script>
-    <script>
-        const API_BASE = @json($apiBase);
         const APP_TOKEN = @json($token);
         const APPLE_DEV_NAME = "Sona";
 
@@ -167,7 +163,12 @@
                     throw new Error(text || "Could not save Apple Music connection.");
                 }
 
-                setStatus("Apple Music connected successfully. You can now close this window and return to the app.", "success");
+                setStatus("Apple Music connected successfully. Returning to app...", "success");
+
+                setTimeout(() => {
+                    window.location.href = "sona://connected";
+                }, 800);
+
             } catch (error) {
                 console.error(error);
                 setStatus(error.message || "An unexpected error occurred.", "error");
