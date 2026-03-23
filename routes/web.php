@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AppleMusicWebAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,5 +52,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('apple-music')->group(function () {
     Route::get('/charts', [AppleMusicController::class, 'chartsWebsite']);
 });
+
+Route::get('/apple-music/android-connect', [AppleMusicWebAuthController::class, 'androidConnectPage']);
 
 require __DIR__.'/auth.php';
