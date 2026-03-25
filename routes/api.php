@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/heartbeat', function (Request $request) {
+        \Log::info('Heartbeat received', ['user' => $request->user()->id]);
         $request->user()->currentAccessToken()->update(['last_used_at' => now()]);
         return response()->json(['ok' => true]);
     });
