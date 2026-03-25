@@ -24,6 +24,10 @@ Route::post('/check-email', [AuthController::class, 'checkEmail']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/heartbeat', function (Request $request) {
+        $request->user()->currentAccessToken()->update(['last_used_at' => now()]);
+        return response()->json(['ok' => true]);
+    });
 
     Route::get('/me', function (Request $request) {
         return $request->user();

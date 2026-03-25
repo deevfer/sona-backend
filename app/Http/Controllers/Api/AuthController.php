@@ -43,31 +43,39 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+    
         $user = User::where('email', $request->email)->first();
-
+    
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json([
                 'error' => 'INVALID_CREDENTIALS'
             ], 422);
         }
-
-        // Bloquear si ya existe una sesión/token activo
+    
+        // Borrar tokens sin actividad en las últimas 24 horas
+        $user->tokens()
+            ->where(function ($query) {
+                // $query->where('last_used_at', '<', now()->subHours(24))
+                $query->where('last_used_at', '<', now()->subMinutes(1))
+                      ->orWhereNull('last_used_at');
+            })
+            ->delete();
+    
+        // Bloquear si aún existe una sesión activa (token usado en últimas 24h)
         if ($user->tokens()->exists()) {
             return response()->json([
                 'error' => 'SESSION_ACTIVE'
             ], 403);
         }
-
+    
         $deviceName = $request->input('device_name', 'sona-device');
         $token = $user->createToken($deviceName)->plainTextToken;
-
+    
         return response()->json([
             'user' => $user,
             'token' => $token,
         ]);
     }
-
     public function logout(Request $request)
     {
         $user = $request->user();
