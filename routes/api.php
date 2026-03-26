@@ -17,6 +17,7 @@ use App\Http\Controllers\AppleMusicController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register-with-payment', [AuthController::class, 'registerWithPayment']);
+Route::post('/register-with-iap', [AuthController::class, 'registerWithIap']);
 Route::post('/check-email', [AuthController::class, 'checkEmail']);
 
 

@@ -170,7 +170,52 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
-
+    public function registerWithIap(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8'],
+            'transactionId' => ['required'],
+            'productId' => ['required'],
+        ]);
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'user',
+        ]);
+    
+        $payment = \App\Models\Payment::create([
+            'user_id' => $user->id,
+            'provider' => 'apple_iap',
+            'provider_transaction_id' => $request->transactionId,
+            'amount' => '3.99',
+            'currency' => 'USD',
+            'status' => 'COMPLETED',
+            'raw_response' => json_encode([
+                'transactionId' => $request->transactionId,
+                'productId' => $request->productId,
+            ]),
+        ]);
+    
+        \App\Models\PremiumAccess::create([
+            'user_id' => $user->id,
+            'payment_id' => $payment->id,
+            'type' => 'lifetime',
+            'starts_at' => now(),
+            'ends_at' => null,
+        ]);
+    
+        $deviceName = $request->input('device_name', 'sona-device');
+        $token = $user->createToken($deviceName)->plainTextToken;
+    
+        return response()->json([
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
     private function generatePayPalAccessToken()
     {
         $response = Http::withBasicAuth(
