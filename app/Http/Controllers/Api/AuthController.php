@@ -189,7 +189,7 @@ class AuthController extends Controller
     
         $payment = \App\Models\Payment::create([
             'user_id' => $user->id,
-            'provider' => 'apple_iap',
+            'provider' => 'apple',
             'provider_transaction_id' => $request->transactionId,
             'amount' => '3.99',
             'currency' => 'USD',
