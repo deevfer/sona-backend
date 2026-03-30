@@ -52,7 +52,7 @@ class AuthController extends Controller
             ], 422);
         }
     
-        // Borrar tokens sin actividad en las últimas 24 horas
+        // Borrar tokens sin actividad
         $user->tokens()
             ->where(function ($query) {
                 // $query->where('last_used_at', '<', now()->subHours(24))
@@ -61,12 +61,15 @@ class AuthController extends Controller
             })
             ->delete();
     
-        // Bloquear si aún existe una sesión activa (token usado en últimas 24h)
+        // Bloquear si aún existe una sesión activa
         if ($user->tokens()->exists()) {
             return response()->json([
                 'error' => 'SESSION_ACTIVE'
             ], 403);
         }
+
+        // Limpiar conexiones externas para forzar nueva autorización
+        ExternalAccount::where('user_id', $user->id)->delete();
     
         $deviceName = $request->input('device_name', 'sona-device');
         $token = $user->createToken($deviceName)->plainTextToken;
@@ -76,6 +79,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
     public function logout(Request $request)
     {
         $user = $request->user();
@@ -170,6 +174,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
     public function registerWithIap(Request $request)
     {
         $request->validate([
@@ -216,6 +221,7 @@ class AuthController extends Controller
             'token' => $token,
         ]);
     }
+
     private function generatePayPalAccessToken()
     {
         $response = Http::withBasicAuth(
