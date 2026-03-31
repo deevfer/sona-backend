@@ -9,7 +9,7 @@ return [
         'https://sona.fernandovasquez.tech',
         'http://localhost:5181',
         'http://127.0.0.1:8000',
-        'http://localhost:5184',
+        'http://localhost:5185',
         'http://localhost',
         'https://localhost',
         'capacitor://localhost',
