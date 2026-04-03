@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\StoryExportController;
 use App\Http\Controllers\AppleMusicController;
-
+use App\Http\Controllers\Api\PasswordResetController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +20,11 @@ Route::post('/register-with-payment', [AuthController::class, 'registerWithPayme
 Route::post('/register-with-iap', [AuthController::class, 'registerWithIap']);
 Route::post('/check-email', [AuthController::class, 'checkEmail']);
 
+
+// Reset Password 
+Route::post('/password/send-code', [PasswordResetController::class, 'sendCode']);
+Route::post('/password/verify-code', [PasswordResetController::class, 'verifyCode']);
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
 
 // Sanctum protected
 Route::middleware('auth:sanctum')->group(function () {
