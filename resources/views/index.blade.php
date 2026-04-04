@@ -109,7 +109,7 @@
                             </div>
                             <div class="downloadButtons">
                                 <a href=""><img src="{{ asset('assets/appstore.svg') }}" alt="App Store Button"></a>
-                                <a href="{{ asset('downloads/Sona.apk') }}" download="Sona.apk"><img src="{{ asset('assets/googleplay.svg') }}" alt="Google Play Button"></a>
+                                <a href="{{ asset('downloads/Sona-v2.apk') }}" download="Sona-v2.apk"><img src="{{ asset('assets/googleplay.svg') }}" alt="Google Play Button"></a>
                             </div>
                             <div class="registerOnWeb">
                                 <div class="bar"></div>
