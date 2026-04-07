@@ -55,8 +55,8 @@ class AuthController extends Controller
         // Borrar tokens sin actividad
         $user->tokens()
             ->where(function ($query) {
-                // $query->where('last_used_at', '<', now()->subHours(24))
-                $query->where('last_used_at', '<', now()->subMinutes(1))
+                $query->where('last_used_at', '<', now()->subHours(24))
+                // $query->where('last_used_at', '<', now()->subMinutes(1))
                       ->orWhereNull('last_used_at');
             })
             ->delete();
