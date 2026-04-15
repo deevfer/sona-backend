@@ -420,5 +420,71 @@ class AppleMusicController extends Controller
         }
     }
 
-    
+    public function demoAlbums(Request $request)
+    {
+        try {
+            $storefront = $request->get('storefront', 'us');
+
+            $response = Http::withHeaders($this->getDeveloperHeaders())
+                ->get("https://api.music.apple.com/v1/catalog/{$storefront}/charts", [
+                    'types' => 'albums',
+                    'limit' => 25,
+                ]);
+
+            if (! $response->ok()) {
+                return response()->json([
+                    'message' => 'Error al obtener álbumes demo',
+                    'status' => $response->status(),
+                    'error' => $response->json(),
+                ], $response->status());
+            }
+
+            $albums = $response->json('results.albums.0.data', []);
+
+            shuffle($albums);
+
+            return response()->json([
+                'data' => array_slice($albums, 0, 5),
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al cargar álbumes demo',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function demoPlaylists(Request $request)
+    {
+        try {
+            $storefront = $request->get('storefront', 'us');
+
+            $response = Http::withHeaders($this->getDeveloperHeaders())
+                ->get("https://api.music.apple.com/v1/catalog/{$storefront}/charts", [
+                    'types' => 'playlists',
+                    'limit' => 25,
+                ]);
+
+            if (! $response->ok()) {
+                return response()->json([
+                    'message' => 'Error al obtener playlists demo',
+                    'status' => $response->status(),
+                    'error' => $response->json(),
+                ], $response->status());
+            }
+
+            $playlists = $response->json('results.playlists.0.data', []);
+
+            shuffle($playlists);
+
+            return response()->json([
+                'data' => array_slice($playlists, 0, 5),
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'Error al cargar playlists demo',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

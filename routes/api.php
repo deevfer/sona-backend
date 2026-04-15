@@ -21,6 +21,7 @@ Route::post('/register-with-iap', [AuthController::class, 'registerWithIap']);
 Route::post('/check-email', [AuthController::class, 'checkEmail']);
 
 
+
 // Reset Password 
 Route::post('/password/send-code', [PasswordResetController::class, 'sendCode']);
 Route::post('/password/verify-code', [PasswordResetController::class, 'verifyCode']);
@@ -155,6 +156,11 @@ Route::middleware(['auth:sanctum', 'premium'])->group(function () {
     });
 });
 
+
+//APPLE MUSIC DEMO APP
+
+Route::post('/api/apple-music/me/library/albums', [AppleMusicController::class, 'demoAlbums']);
+Route::post('/api/apple-music/me/library/playlists', [AppleMusicController::class, 'demoPlaylists']);
 
 // Story download
 Route::get('/story/{id}/download-mp4', [StoryExportController::class, 'downloadMp4']);
