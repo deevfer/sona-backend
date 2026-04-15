@@ -159,8 +159,8 @@ Route::middleware(['auth:sanctum', 'premium'])->group(function () {
 
 //APPLE MUSIC DEMO APP
 
-Route::post('/apple-music/demo/albums', [AppleMusicController::class, 'demoAlbums']);
-Route::post('/apple-music/demo/playlists', [AppleMusicController::class, 'demoPlaylists']);
+Route::get('/apple-music/demo/albums', [AppleMusicController::class, 'demoAlbums']);
+Route::get('/apple-music/demo/playlists', [AppleMusicController::class, 'demoPlaylists']);
 
 // Story download
 Route::get('/story/{id}/download-mp4', [StoryExportController::class, 'downloadMp4']);
