@@ -22,6 +22,8 @@ Route::post('/check-email', [AuthController::class, 'checkEmail']);
 
 
 
+
+
 // Reset Password 
 Route::post('/password/send-code', [PasswordResetController::class, 'sendCode']);
 Route::post('/password/verify-code', [PasswordResetController::class, 'verifyCode']);
@@ -41,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
+    Route::post('/delete-account', [AuthController::class, 'deleteAccount']);
     // Provider status
     Route::get('/spotify/status', [SpotifyController::class, 'status']);
     Route::get('/apple-music/status', [AppleMusicController::class, 'status']);

@@ -80,6 +80,53 @@ class AuthController extends Controller
         ]);
     }
 
+    public function deleteAccount(Request $request)
+    {
+        $user = $request->user();
+
+        if (! $user) {
+            return response()->json([
+                'message' => 'Unauthenticated.'
+            ], 401);
+        }
+
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        if (mb_strtolower(trim($request->email)) !== mb_strtolower(trim($user->email))) {
+            return response()->json([
+                'message' => 'The provided email does not match the logged in account.'
+            ], 422);
+        }
+
+        DB::transaction(function () use ($user) {
+            // Eliminar conexiones externas
+            ExternalAccount::where('user_id', $user->id)->delete();
+
+            // Eliminar sesiones guardadas
+            DB::table('sessions')
+                ->where('user_id', $user->id)
+                ->delete();
+
+            // Eliminar tokens de Sanctum
+            $user->tokens()->delete();
+
+            // Eliminar premium access si existe relación con user_id
+            DB::table('premium_access')->where('user_id', $user->id)->delete();
+
+            // Eliminar payments si existe relación con user_id
+            DB::table('payments')->where('user_id', $user->id)->delete();
+
+            // Finalmente eliminar usuario
+            $user->delete();
+        });
+
+        return response()->json([
+            'message' => 'Account deleted successfully.'
+        ]);
+    }
+
     public function logout(Request $request)
     {
         $user = $request->user();
