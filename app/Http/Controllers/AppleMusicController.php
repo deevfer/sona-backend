@@ -444,7 +444,7 @@ class AppleMusicController extends Controller
             // shuffle($albums);
 
             return response()->json([
-                'data' => array_slice($albums, 0, 10),
+                'data' => array_slice($albums, 0, 15),
             ]);
         } catch (\Throwable $e) {
             return response()->json([
@@ -478,7 +478,7 @@ class AppleMusicController extends Controller
             // shuffle($playlists);
 
             return response()->json([
-                'data' => array_slice($playlists, 0, 10),
+                'data' => array_slice($playlists, 0, 15),
             ]);
         } catch (\Throwable $e) {
             return response()->json([
