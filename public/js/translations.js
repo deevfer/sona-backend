@@ -15,10 +15,10 @@ const resources = {
             req_devices_text: "Sona is available on iPhone, iPad, Android devices, tablets, and computers via a web browser.",
 
             req_os_title: "Compatible operating systems",
-            req_os_text: "iPhone: iOS 16 or later<br>iPad: iPadOS 16 or later<br>Android (smartphones and tablets): Android 10 or later<br>Web/Desktop: Up-to-date browser (Chrome, Safari, or Edge recommended)",
+            req_os_text: "iPhone: iOS 18 or later<br>iPad: iPadOS 18 or later<br>Android (smartphones and tablets): Android 10 or later<br>Web/Desktop: Up-to-date browser (Chrome, Safari, or Edge recommended)",
 
             req_music_title: "Required music service",
-            req_music_text: "To use Sona, you need an active subscription to a compatible service:<br>Apple Music (currently available)<br>Spotify Premium (coming soon)",
+            req_music_text: "To use Sona, you need an active subscription to a compatible service:<br>Apple Music (currently available) - iOS<br>Spotify Premium (coming soon) - iOS<br>Any music streaming app - Android",
 
             req_account_title: "Account and access",
             req_account_text: "You must create a Sona account, sign in on your device, and link your compatible music service.",
@@ -39,16 +39,16 @@ const resources = {
             terms_intro: "By accessing and using Sona, you agree to the following terms and conditions. If you do not agree with any of them, we recommend that you do not use the service.",
 
             terms_service_title: "Service Description",
-            terms_service_text: "Sona is a digital application that allows users to view and play their music from compatible streaming services, such as Apple Music and, coming soon, Spotify, through a visual experience inspired by vinyl records.<br>Sona does not store or distribute its own music, but rather acts as an interface that connects to third-party services.",
+            terms_service_text: "Sona is a digital app that lets users view and play their music from compatible streaming services such as Apple Music and, coming soon, Spotify (iOS) and any music streaming platform (Android), through a visual experience inspired by vinyl records.<br>Sona does not store or distribute its own music, but rather acts as an interface that connects to third-party services.",
 
             terms_requirements_title: "Requirements for Use",
-            terms_requirements_text: "To use Sona, the user must have an active Sona account, a valid subscription to Apple Music or, in the future, Spotify Premium, a compatible device, and an internet connection.",
+            terms_requirements_text: "To use Sona, the user must have an active Sona account, a valid subscription to Apple Music or, in the future, Spotify Premium (iOS), any music streaming app installed on the device (Android), a compatible device, and an internet connection.",
 
             terms_account_title: "User Account",
             terms_account_text: "The user is responsible for maintaining the confidentiality of their account, providing accurate information, and for all activities carried out from their account.<br>Account use is personal, and only one device may be logged in at a time.<br>Sona is not liable for unauthorized access resulting from the misuse of credentials.",
 
             terms_integration_title: "Integration with Third-Party Services",
-            terms_integration_text: "Sona integrates with external services such as Apple Music and Spotify.<br>By using these integrations, you also agree to the terms and policies of those services.",
+            terms_integration_text: "Sona integrates with external services such as Apple Music and Spotify on iOS and any music streaming platform on Android.<br>By using these integrations, you also agree to the terms and policies of those services.",
 
             terms_payment_title: "Payment and Access",
             terms_payment_text: "Sona offers access for a one-time payment of $2.99 if the user signs up via the website or Android app, and $3.99 when purchasing on iPhone or iPad (lifetime access).<br>Payment grants access to currently available features and future updates, unless otherwise specified.<br>Access is personal and non-transferable.<br>Resale or distribution of accounts is not permitted.",
@@ -75,19 +75,19 @@ const resources = {
             terms_contact_text: "For any questions regarding these terms, please contact us at: sona@fernandovasquez.tech",
             faq_title:"FAQ",
             faq_q1: "What is Sona?",
-            faq_a1: "Sona is an app that lets you rediscover your music through a visual experience inspired by vinyl records, connecting to services like Apple Music and, coming soon, Spotify.",
+            faq_a1: "Sona is an app that lets you rediscover your music through a visual experience inspired by vinyl records, connecting to services like Apple Music and, coming soon, Spotify (iOS) and any music streaming app (Android).",
 
             faq_q2: "Is Sona a music service?",
             faq_a2: "No. Sona does not store or distribute music. It acts as an interface that connects to your streaming service to play your library.",
 
             faq_q3: "What do I need to use Sona?",
-            faq_a3: "You need a compatible device, an internet connection, a Sona account, and an active subscription to Apple Music or, coming soon, Spotify Premium.",
+            faq_a3: "You need a compatible device, an internet connection, a Sona account, and an active subscription to Apple Music or, coming soon, Spotify Premium (iOS) and any music platform (Android).",
 
             faq_q4: "Does Sona work without a subscription?",
             faq_a4: "No. Sona requires an active subscription to a compatible streaming service to play music.",
 
             faq_q5: "Is Spotify available yet?",
-            faq_a5: "Sona is currently compatible with Apple Music. Spotify Premium integration is coming soon.",
+            faq_a5: "Sona is currently compatible with Apple Music. Spotify Premium integration is coming soon (iOS) and any music streaming app (Android).",
 
             faq_q6: "On which devices can I use Sona?",
             faq_a6: "Sona is available on iPhone, iPad, Android devices, tablets, and computers via modern browsers.",
@@ -136,10 +136,10 @@ const resources = {
             req_devices_text: "Sona está disponible en iPhone, iPad, dispositivos Android, tablets y computadoras a través de un navegador web.",
             
             req_os_title: "Sistemas operativos compatibles",
-            req_os_text: "iPhone: iOS 16 o superior<br>iPad: iPadOS 16 o superior<br>Android (smartphones y tablets): Android 10 o superior<br>Web/Escritorio: Navegador actualizado (Chrome, Safari o Edge recomendado)",
+            req_os_text: "iPhone: iOS 18 o superior<br>iPad: iPadOS 18 o superior<br>Android (smartphones y tablets): Android 10 o superior<br>Web/Escritorio: Navegador actualizado (Chrome, Safari o Edge recomendado)",
             
             req_music_title: "Servicio de música requerido",
-            req_music_text: "Para usar Sona, necesitas una suscripción activa a un servicio compatible:<br>Apple Music (actualmente disponible)<br>Spotify Premium (próximamente)",
+            req_music_text: "Para usar Sona, necesitas una suscripción activa a un servicio compatible:<br>Apple Music (actualmente disponible) -iOS<br>Spotify Premium (próximamente) -iOS<br>Cualquier aplicación de streaming de música - Android",
             
             req_account_title: "Cuenta y acceso",
             req_account_text: "Debes crear una cuenta en Sona, iniciar sesión en tu dispositivo y vincular tu servicio de música compatible.",
@@ -160,16 +160,16 @@ const resources = {
             terms_intro: "Al acceder y utilizar Sona, aceptas los siguientes términos y condiciones. Si no estás de acuerdo con alguno de ellos, te recomendamos no utilizar el servicio.",
 
             terms_service_title: "Descripción del servicio",
-            terms_service_text: "Sona es una aplicación digital que permite a los usuarios visualizar y reproducir su música desde servicios de streaming compatibles como Apple Music y, próximamente, Spotify, a través de una experiencia visual inspirada en discos de vinilo.<br>Sona no almacena ni distribuye música propia, sino que actúa como una interfaz que se conecta a servicios de terceros.",
+            terms_service_text: "Sona es una aplicación digital que permite a los usuarios visualizar y reproducir su música desde servicios de streaming compatibles como Apple Music y, próximamente, Spotify (iOS) y cualquier plataforma de streaming de música (Android), a través de una experiencia visual inspirada en discos de vinilo.<br>Sona no almacena ni distribuye música propia, sino que actúa como una interfaz que se conecta a servicios de terceros.",
 
             terms_requirements_title: "Requisitos de uso",
-            terms_requirements_text: "Para utilizar Sona, el usuario debe contar con una cuenta activa en Sona, una suscripción válida a Apple Music o, en el futuro, Spotify Premium, un dispositivo compatible y conexión a internet.",
+            terms_requirements_text: "Para utilizar Sona, el usuario debe contar con una cuenta activa en Sona, una suscripción válida a Apple Music o, en el futuro, Spotify Premium (iOS), cualquier plataforma de streaming de música instalada en el dispositivo (Android), un dispositivo compatible y conexión a internet.",
 
             terms_account_title: "Cuenta de usuario",
             terms_account_text: "El usuario es responsable de mantener la confidencialidad de su cuenta, proporcionar información veraz y de todas las actividades realizadas desde su cuenta.<br>El uso de la cuenta es personal y solo puede iniciarse sesión en un dispositivo a la vez.<br>Sona no se hace responsable por accesos no autorizados derivados del mal uso de las credenciales.",
 
             terms_integration_title: "Integración con servicios de terceros",
-            terms_integration_text: "Sona se integra con servicios externos como Apple Music y Spotify.<br>Al utilizar estas integraciones, también aceptas los términos y políticas de dichos servicios.",
+            terms_integration_text: "Sona se integra con servicios externos como Apple Music y Spotify en iOS y cualquier plataforma de streaming de música en Android.<br>Al utilizar estas integraciones, también aceptas los términos y políticas de dichos servicios.",
 
             terms_payment_title: "Pago y acceso",
             terms_payment_text: "Sona ofrece acceso mediante un pago único de $2.99 si el usuario se registra desde la web o Android, y $3.99 al adquirirlo en iPhone o iPad (acceso de por vida).<br>El pago otorga acceso a las funcionalidades actuales y futuras actualizaciones, salvo que se indique lo contrario.<br>El acceso es personal e intransferible.<br>No está permitida la reventa o distribución de cuentas.",
@@ -196,19 +196,19 @@ const resources = {
             terms_contact_text: "Para cualquier consulta sobre estos términos, puedes contactarnos en: sona@fernandovasquez.tech",
             faq_title: "Preguntas Frecuentes",
             faq_q1: "¿Qué es Sona?",
-            faq_a1: "Sona es una app que te permite redescubrir tu música a través de una experiencia visual inspirada en discos de vinilo, conectándose a servicios como Apple Music y, próximamente, Spotify.",
+            faq_a1: "Sona es una app que te permite redescubrir tu música a través de una experiencia visual inspirada en discos de vinilo, conectándose a servicios como Apple Music y, próximamente, Spotify (iOS) y cualquier aplicación de música (Android).",
             
             faq_q2: "¿Sona es un servicio de música?",
             faq_a2: "No. Sona no almacena ni distribuye música. Actúa como una interfaz que se conecta a tu servicio de streaming para reproducir tu biblioteca.",
             
             faq_q3: "¿Qué necesito para usar Sona?",
-            faq_a3: "Necesitas un dispositivo compatible, una conexión a internet, una cuenta de Sona y una suscripción activa a Apple Music o, próximamente, Spotify Premium.",
+            faq_a3: "Necesitas un dispositivo compatible, una conexión a internet, una cuenta de Sona y una suscripción activa a Apple Music o, próximamente, Spotify Premium (iOS) y cualquier plataforma de música (Android).",
             
             faq_q4: "¿Sona funciona sin una suscripción a Apple Music o Spotify?",
             faq_a4: "No. Sona requiere una suscripción activa a un servicio de streaming compatible para reproducir música.",
             
             faq_q5: "¿Spotify ya está disponible?",
-            faq_a5: "Actualmente, Sona es compatible con Apple Music. La integración con Spotify Premium estará disponible próximamente.",
+            faq_a5: "Actualmente, Sona es compatible con Apple Music. La integración con Spotify Premium estará disponible próximamente (iOS) y cualquier plataforma de música (Android)..",
             
             faq_q6: "¿En qué dispositivos puedo usar Sona?",
             faq_a6: "Sona está disponible en iPhone, iPad, dispositivos Android, tablets y computadoras a través de navegadores modernos.",

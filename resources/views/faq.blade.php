@@ -47,7 +47,7 @@
                                 What is Sona?
                             </button>
                             <div class="faqAnswer" data-i18n="faq_a1">
-                                Sona is an app that lets you rediscover your music through a visual experience inspired by vinyl records, connecting to services like Apple Music and, coming soon, Spotify.
+                                Sona is an app that lets you rediscover your music through a visual experience inspired by vinyl records, connecting to services like Apple Music and, coming soon, Spotify (iOS) and any music streaming app (Android).
                             </div>
                         </div>
 
@@ -61,7 +61,7 @@
                         <div class="faqItem">
                             <button class="faqQuestion" data-i18n="faq_q3">What do I need to use Sona?</button>
                             <div class="faqAnswer" data-i18n="faq_a3">
-                                You need a compatible device, an internet connection, a Sona account, and an active subscription to Apple Music or, coming soon, Spotify Premium.
+                                You need a compatible device, an internet connection, a Sona account, and an active subscription to Apple Music or, coming soon, Spotify Premium (iOS) and any music streaming app (Android).
                             </div>
                         </div>
 
@@ -75,7 +75,7 @@
                         <div class="faqItem">
                             <button class="faqQuestion" data-i18n="faq_q5">Is Spotify available yet?</button>
                             <div class="faqAnswer" data-i18n="faq_a5">
-                                Sona is currently compatible with Apple Music. Spotify Premium integration is coming soon.
+                                Sona is currently compatible with Apple Music. Spotify Premium integration is coming soon (iOS) and any music streaming app (Android).
                             </div>
                         </div>
 

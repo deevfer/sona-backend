@@ -108,7 +108,7 @@
                                 <span>Web</span>
                             </div>
                             <div class="downloadButtons">
-                                <a href=""><img src="{{ asset('assets/appstore.svg') }}" alt="App Store Button"></a>
+                                <a href="https://apps.apple.com/us/app/sona-vinyl-app/id6761140107" target="_blank"><img src="{{ asset('assets/appstore.svg') }}" alt="App Store Button"></a>
                                 <a href="{{ asset('downloads/Sona-v2.apk') }}" download="Sona-v2.apk"><img src="{{ asset('assets/googleplay.svg') }}" alt="Google Play Button"></a>
                             </div>
                             <div class="registerOnWeb">
@@ -138,8 +138,8 @@
 
                         <h3 data-i18n="req_os_title">Compatible operating systems</h3>
                         <p data-i18n="req_os_text">
-                            iPhone: iOS 16 or later<br>
-                            iPad: iPadOS 16 or later<br>
+                            iPhone: iOS 18 or later<br>
+                            iPad: iPadOS 18 or later<br>
                             Android (smartphones and tablets): Android 10 or later<br>
                             Web/Desktop: Up-to-date browser (Chrome, Safari, or Edge recommended)
                         </p>
@@ -147,8 +147,9 @@
                         <h3 data-i18n="req_music_title">Required music service</h3>
                         <p data-i18n="req_music_text">
                             To use Sona, you need an active subscription to a compatible service:<br>
-                            Apple Music (currently available)<br>
-                            Spotify Premium (coming soon)
+                            Apple Music (currently available) - iOS<br>
+                            Spotify Premium (coming soon) - iOS <br>
+                            Any music streaming app - Android
                         </p>
 
                         <h3 data-i18n="req_account_title">Account and access</h3>

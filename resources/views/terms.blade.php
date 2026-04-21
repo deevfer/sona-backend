@@ -53,7 +53,7 @@
 
                         <h3 data-i18n="terms_service_title">Service Description</h3>
                         <p data-i18n="terms_service_text">
-                            Sona is a digital application that allows users to view and play their music from compatible streaming services, such as Apple Music and, coming soon, Spotify, through a visual experience inspired by vinyl records.<br>
+                        Sona is a digital app that lets users view and play their music from compatible streaming services such as Apple Music and, coming soon, Spotify (iOS) and any music streaming platform (Android), through a visual experience inspired by vinyl records.<br>
                             Sona does not store or distribute its own music, but rather acts as an interface that connects to third-party services.
                         </p>
 
