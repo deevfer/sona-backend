@@ -56,6 +56,21 @@ Route::get('/spotify/callback', [SpotifyController::class, 'callback']);
 
 Route::get('/apple-music/landing-artworks', [AppleMusicController::class, 'landingArtworks']);
 
+/*
+|--------------------------------------------------------------------------
+| Apple Music public catalog
+|--------------------------------------------------------------------------
+| Free trial users are not authenticated, but catalog tracks only need the
+| Apple developer token. User-library endpoints remain protected below.
+|--------------------------------------------------------------------------
+*/
+Route::prefix('apple-music')->group(function () {
+    Route::get('/albums/{id}', [AppleMusicController::class, 'album']);
+    Route::get('/albums/{id}/tracks', [AppleMusicController::class, 'albumTracks']);
+    Route::get('/playlists/{id}', [AppleMusicController::class, 'playlist']);
+    Route::get('/playlists/{id}/tracks', [AppleMusicController::class, 'playlistTracks']);
+});
+
 // Spotify + Apple Music API (premium)
 Route::middleware(['auth:sanctum', 'premium'])->group(function () {
 
@@ -127,13 +142,7 @@ Route::middleware(['auth:sanctum', 'premium'])->group(function () {
 
         Route::get('/songs/{id}', [AppleMusicController::class, 'song']);
 
-        Route::get('/albums/{id}', [AppleMusicController::class, 'album']);
-        Route::get('/albums/{id}/tracks', [AppleMusicController::class, 'albumTracks']);
-
         Route::get('/artists/{id}', [AppleMusicController::class, 'artist']);
-
-        Route::get('/playlists/{id}', [AppleMusicController::class, 'playlist']);
-        Route::get('/playlists/{id}/tracks', [AppleMusicController::class, 'playlistTracks']);
 
         Route::get('/charts', [AppleMusicController::class, 'charts']);
     });
