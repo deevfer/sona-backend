@@ -28,7 +28,7 @@ Route::post('/check-email', [AuthController::class, 'checkEmail']);
 Route::post('/password/send-code', [PasswordResetController::class, 'sendCode']);
 Route::post('/password/verify-code', [PasswordResetController::class, 'verifyCode']);
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword']);
-
+Route::post('/register-free', [AuthController::class, 'registerFree']);
 // Sanctum protected
 Route::middleware('auth:sanctum')->group(function () {
 

@@ -280,4 +280,39 @@ class AuthController extends Controller
 
         return $response->json()['access_token'];
     }
+
+    public function registerFree(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:8'],
+            'secret' => ['required'],
+        ]);
+
+        if ($request->secret !== 'SONA_FREE_2026') {
+            return response()->json(['error' => 'INVALID_SECRET'], 403);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        Payment::create([
+            'user_id' => $user->id,
+            'provider' => 'free',
+            'provider_transaction_id' => 'free-' . uniqid(),
+            'amount' => '0',
+            'currency' => 'USD',
+            'status' => 'COMPLETED',
+            'raw_response' => json_encode(['note' => 'Free membership giveaway']),
+        ]);
+
+        return response()->json([
+            'user' => $user,
+            'message' => 'Account created successfully',
+        ]);
+    }
 }
