@@ -305,7 +305,7 @@ class AuthController extends Controller
 
         Payment::create([
             'user_id' => $user->id,
-            'provider' => 'manual',
+            'provider' => 'apple',
             'provider_transaction_id' => 'free-' . uniqid(),
             'amount' => '0',
             'currency' => 'USD',
